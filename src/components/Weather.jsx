@@ -83,7 +83,6 @@ const Weather = () => {
       </motion.form>
       {error && (
         <Toaster>
-          {/* style={{padding: 8} */}
         {(t) => (
           <ToastBar style={{ padding: 8, height: 60 }} toast={t}>
             {({ icon, message }) => (
