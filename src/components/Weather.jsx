@@ -30,7 +30,7 @@ const Weather = () => {
     "09n": drizzle,
   };
   const API_KEY = "0807337234b6023e8b93a63d20773de7";
-  const notify = () => toast("City not found!");
+  const notify = () => toast("City not found !", { icon: "❌" });
 
   const fetchWeatherData = async () => {
     try {
@@ -63,9 +63,9 @@ const Weather = () => {
       drag
       dragConstraints={constraintsRef}
       ref={constraintsRef}
-      className="place-self-center overflow-hidden overflow-y-auto bg-gradient-to-r from-blue-600 text-white to-cyan-600 shadow-zinc-800 drop-shadow-2xl tracking-wide p-[40px] rounded-3xl shadow-2xl flex items-center flex-col "
+      className="place-self-center bg-gradient-to-r from-blue-600 text-white to-cyan-600 shadow-zinc-800 lg:drop-shadow-2xl tracking-wide p-[25px] rounded-3xl shadow-2xl flex items-center flex-col "
     >
-      <motion.form onSubmit={handleSubmit} className="flex items-center gap-3">
+      <motion.form onSubmit={handleSubmit} className="flex items-center gap-2">
         <input
           type="text"
           placeholder="Search"
@@ -83,27 +83,21 @@ const Weather = () => {
       </motion.form>
       {error && (
         <Toaster>
-          {(t) => (
-            <ToastBar
-              toast={t}
-              style={{
-                ...t.style,
-                animation: t.visible
-                  ? "custom-enter 1s ease"
-                  : "custom-exit 1s ease",
-                border: "1px solid #0700dc",
-                padding: "20px",
-                gap: "10px",
-                duration: 1000,
-                transition: "all 1s easeInOut",
-                color: "#0700dc",
-                backgroundColor: "#fff",
-                fontStyle: "bold",
-                fontSize: "20px",
-              }}
-            />
-          )}
-        </Toaster>
+          {/* style={{padding: 8} */}
+        {(t) => (
+          <ToastBar style={{ padding: 8, height: 60 }} toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                {message}
+                {t.type !== 'loading' && (
+                  <button onClick={() => toast.dismiss(t.id)}>X</button>
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
       )}
       {weatherData && (
         <>
@@ -172,9 +166,9 @@ const Weather = () => {
           >
             Feels Like: {Math.floor(weatherData.main.feels_like)}°C
           </motion.p>
-          <div className="text-white w-[100%] mt-[20px] flex justify-between">
+          <div className="text-white w-[100%] mt-[22px] flex justify-between">
             <div className="flex items-start gap-[12px] font-[22px]">
-              <img src={humidity} alt="" className="w-[40px] h-8 mt-[10px]" />
+              <img src={humidity} alt="" className="w-[40px] h-8 mt-[6px]" />
               <div className="flex-col flex">
                 <p>{weatherData.main.humidity}%</p>
                 <span className="block text-[16px]">Humidity</span>
@@ -184,7 +178,7 @@ const Weather = () => {
               <img
                 src={wind}
                 alt=""
-                className="top-0 w-[45px] h-10 mt-[10px]"
+                className="top-0 w-[45px] h-10 mt-[5.5px]"
               />
               <div className="flex-col grid mt-1">
                 <p>{weatherData.wind.speed} Km/h</p>
