@@ -1,6 +1,6 @@
 # <div align="center">WEATHER APP Made With React and Vite.</div>
 
-<a href="[da-weather.vercel.app](http://da-weather.vercel.app/)">![image](https://github.com/danyalmoazzam/WeatherApp-React-Tail-Framer/assets/154667312/5c4d32a3-9f64-48d2-8d0f-0804efc37811)</a>
+<a href="http://da-weather.vercel.app">![image](https://github.com/danyalmoazzam/WeatherApp-React-Tail-Framer/assets/154667312/5c4d32a3-9f64-48d2-8d0f-0804efc37811)</a>
 
 ## <div align="center">Technologies Used</div>
 
