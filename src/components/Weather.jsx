@@ -31,6 +31,7 @@ const Weather = () => {
   };
   const API_KEY = "0807337234b6023e8b93a63d20773de7";
   const notify = () => toast("City not found !", { icon: "❌" });
+  
 
   const fetchWeatherData = async () => {
     try {
@@ -59,6 +60,7 @@ const Weather = () => {
   };
 
   return (
+   
     <motion.div
       drag
       dragConstraints={constraintsRef}
@@ -167,8 +169,8 @@ const Weather = () => {
           </motion.p>
           <div className="text-white w-[100%] mt-[22px] flex justify-between">
             <div className="flex items-start gap-[12px] font-[22px]">
-              <img src={humidity} alt="" className="w-[40px] h-8 mt-[6px]" />
-              <div className="flex-col flex">
+              <img src={humidity} alt="" className="w-[40px] h-9 mt-[7px]" />
+              <div className="flex-col mb-1 flex">
                 <p>{weatherData.main.humidity}%</p>
                 <span className="block text-[16px]">Humidity</span>
               </div>
@@ -179,7 +181,7 @@ const Weather = () => {
                 alt=""
                 className="top-0 w-[45px] h-10 mt-[5.5px]"
               />
-              <div className="flex-col grid mt-1">
+              <div className="flex-col grid ">
                 <p>{weatherData.wind.speed} Km/h</p>
                 <span className="block text-[16px]">Wind Speed</span>
               </div>
