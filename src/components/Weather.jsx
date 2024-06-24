@@ -9,7 +9,7 @@ import cloud from "../assets/cloud.png";
 import drizzle from "../assets/drizzle.png";
 import rain from "../assets/rain.png";
 import snow from "../assets/snow.png";
-import toast, { ToastBar, Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Weather = () => {
   const [inputCity, setInputCity] = useState("Lahore");
@@ -30,9 +30,7 @@ const Weather = () => {
     "09n": drizzle,
   };
   const API_KEY = "0807337234b6023e8b93a63d20773de7";
-  const notify = () => toast("City not found !", { icon: "❌" });
   
-
   const fetchWeatherData = async () => {
     try {
       const response = await axios.get(
@@ -43,6 +41,7 @@ const Weather = () => {
     } catch (error) {
       setError("City not found!");
       setWeatherData(null);
+      toast("City not found !", { icon: "❌" });
     }
   };
 
@@ -59,135 +58,135 @@ const Weather = () => {
     setInputCity(e.target.value);
   };
 
+  const commonMotionProps = {
+    whileHover: { scale: 1.2 },
+    whileTap: { scale: 1.1 },
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 10,
+    },
+    initial: { scale: 0 },
+    animate: { scale: 1 },
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 50,
+        damping: 10,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  };
+
   return (
-   
     <motion.div
       drag
       dragConstraints={constraintsRef}
       ref={constraintsRef}
-      className="place-self-center bg-gradient-to-r from-blue-600 text-white to-cyan-600 shadow-zinc-800 lg:drop-shadow-2xl tracking-wide p-[25px] rounded-3xl shadow-2xl flex items-center flex-col "
+      className="place-self-center bg-white/5 bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-90 border border-gray-200/20 text-white shadow-zinc-800 lg:drop-shadow-2xl tracking-wide p-[25px] rounded-3xl shadow-2xl flex items-center flex-col "
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
     >
       <motion.form onSubmit={handleSubmit} className="flex items-center gap-2">
-        <input
+        <motion.input
           type="text"
           placeholder="Search"
           onChange={handleInputChange}
           value={inputCity}
-          className="h-[50px] placeholder:italic capitalize border-none outline-none rounded-3xl text-zinc-800 pl-[25px] font-[18px]"
+          className="h-[50px] placeholder:bold capitalize border-none outline-none rounded-3xl text-zinc-800 bg-white pl-[25px] font-[18px]"
+          variants={itemVariants}
         />
-        <button
+        <motion.button
           type="submit"
-          onClick={notify}
           className="cursor-pointer bg-white text-black flex items-center justify-center h-[51px] w-[51px] rounded-full p-3"
+          variants={itemVariants}
         >
           <FiSearch className="text-black scale-[1.5] hover:scale-[1.75] transition-all duration-300" />
-        </button>
+        </motion.button>
       </motion.form>
-      {error && (
-        <Toaster>
-        {(t) => (
-          <ToastBar style={{ padding: 8, height: 60 }} toast={t}>
-            {({ icon, message }) => (
-              <>
-                {icon}
-                {message}
-                {t.type !== 'loading' && (
-                  <button onClick={() => toast.dismiss(t.id)}>X</button>
-                )}
-              </>
-            )}
-          </ToastBar>
-        )}
-      </Toaster>
-      )}
+      <Toaster />
       {weatherData && (
-        <>
+        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
           <motion.img
-            src={cloud}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 1.1 }}
+            src={allIcons[weatherData.weather[0].icon] || cloud}
+            {...commonMotionProps}
             transition={{
+              ...commonMotionProps.transition,
               ease: "easeOutElastic",
-              type: "spring",
-              stiffness: 400,
-              damping: 10,
               delay: 0.2,
             }}
-            initial={{ scale: 0 }}
             animate={{
-              x: 0,
-              scale: 1,
+              ...commonMotionProps.animate,
               transition: { duration: 0.4 },
             }}
-            className="w-[150px] select-none mb-[15px] mt-[30px] mx-0"
-            alt=""
+            className="w-[150px] ml-16 select-none mb-[15px] mt-[30px] mx-0"
+            alt="weather icon"
           />
           <motion.p
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 1.1 }}
-            transition={{
-              ease: "easeOutElastic",
-              type: "spring",
-              stiffness: 400,
-              damping: 10,
-            }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="text-[60px] leading-tight text-white"
+            {...commonMotionProps}
+            className="text-[60px]  ml-[75px] leading-tight text-white"
           >
             {Math.floor(weatherData.main.temp)}°C
           </motion.p>
           <motion.p
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="text-[35px]  text-white"
+            {...commonMotionProps}
+            className="text-[35px]  ml-[83px] text-white"
           >
             {weatherData.name}
           </motion.p>
           <motion.p
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="text-[20px] py-1 capitalize text-white"
+            {...commonMotionProps}
+            className="text-[20px]  ml-[96px] py-1 capitalize text-white"
           >
             {weatherData.weather[0].description}
           </motion.p>
           <motion.p
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="text-[22px] py-[2px] text-white "
+            {...commonMotionProps}
+            className="text-[22px] ml-[57px] py-[2px] text-white "
           >
             Feels Like: {Math.floor(weatherData.main.feels_like)}°C
           </motion.p>
-          <div className="text-white w-[100%] mt-[22px] flex justify-between">
-            <div className="flex items-start gap-[12px] font-[22px]">
-              <img src={humidity} alt="" className="w-[40px] h-9 mt-[7px]" />
+          <div className="text-white w-[100%] gap- mt-[22px] flex justify-between">
+            <motion.div className="flex items-start gap-[12px] font-[22px]" variants={itemVariants}>
+              <img src={humidity} alt="humidity icon" className="w-[40px] h-9 mt-[7px]" />
               <div className="flex-col mb-1 flex">
                 <p>{weatherData.main.humidity}%</p>
                 <span className="block text-[16px]">Humidity</span>
               </div>
-            </div>
-            <div className="flex gap-3">
+            </motion.div>
+            <motion.div className="flex gap-3" variants={itemVariants}>
               <img
                 src={wind}
-                alt=""
-                className="top-0 w-[45px] h-10 mt-[5.5px]"
+                alt="wind icon"
+                className="top-0 w-[40px] ml-5 h-10 mt-[5.5px]"
               />
-              <div className="flex-col grid ">
+              <div className="flex-col grid">
                 <p>{weatherData.wind.speed} Km/h</p>
                 <span className="block text-[16px]">Wind Speed</span>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </>
+        </motion.div>
       )}
     </motion.div>
   );
