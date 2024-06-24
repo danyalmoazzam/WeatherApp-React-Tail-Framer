@@ -59,7 +59,7 @@ const Weather = () => {
   };
 
   const commonMotionProps = {
-    whileHover: { scale: 1.2 },
+    whileHover: { scale: 1.1 },
     whileTap: { scale: 1.1 },
     transition: {
       type: "spring",
@@ -67,7 +67,7 @@ const Weather = () => {
       damping: 10,
     },
     initial: { scale: 0 },
-    animate: { scale: 1 },
+    animate: { scale: 1, transition: { duration: 0.8 } },
   };
 
   const containerVariants = {
@@ -126,7 +126,7 @@ const Weather = () => {
       </motion.form>
       <Toaster />
       {weatherData && (
-        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+        <motion.div className="flex flex-col items-center" initial="hidden" animate="visible" variants={containerVariants}>
           <motion.img
             src={allIcons[weatherData.weather[0].icon] || cloud}
             {...commonMotionProps}
@@ -139,24 +139,24 @@ const Weather = () => {
               ...commonMotionProps.animate,
               transition: { duration: 0.4 },
             }}
-            className="w-[150px] ml-16 select-none mb-[15px] mt-[30px] mx-0"
+            className="w-[150px]  select-none mb-[15px] mt-[30px] mx-0"
             alt="weather icon"
           />
           <motion.p
             {...commonMotionProps}
-            className="text-[60px]  px-16 ml-1 leading-tight text-white"
+            className="text-[60px]  px-16 text-center leading-tight text-white"
           >
             {Math.floor(weatherData.main.temp)}°C
           </motion.p>
           <motion.p
             {...commonMotionProps}
-            className="text-[35px] ml-1  px-20 text-white"
+            className="text-[35px] text-center  px-20 text-white"
           >
             {weatherData.name}
           </motion.p>
           <motion.p
             {...commonMotionProps}
-            className="text-[20px] ml-2 px-14 py-1 capitalize text-white"
+            className="text-[20px] text-center px-14 py-1 capitalize text-white"
           >
             {weatherData.weather[0].description}
           </motion.p>
