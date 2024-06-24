@@ -144,19 +144,19 @@ const Weather = () => {
           />
           <motion.p
             {...commonMotionProps}
-            className="text-[60px]  px-16 text-center leading-tight text-white"
+            className="text-[60px] px-16 text-center leading-tight text-white"
           >
             {Math.floor(weatherData.main.temp)}°C
           </motion.p>
           <motion.p
             {...commonMotionProps}
-            className="text-[35px] text-center px-20 text-white"
+            className="text-[40px] text-center px-20 text-white"
           >
             {weatherData.name}
           </motion.p>
           <motion.p
             {...commonMotionProps}
-            className="text-[30px] text-center px-14 py-1 capitalize text-white"
+            className="text-[23px] text-center px-14 py-1 capitalize text-white"
           >
             {weatherData.weather[0].description}
           </motion.p>
